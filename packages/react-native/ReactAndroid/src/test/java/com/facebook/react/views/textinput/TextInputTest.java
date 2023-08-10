@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,7 +44,6 @@ import org.robolectric.RuntimeEnvironment;
 @PrepareForTest({Arguments.class, ReactChoreographer.class})
 @RunWith(RobolectricTestRunner.class)
 @PowerMockIgnore({"org.mockito.*", "org.robolectric.*", "androidx.*", "android.*"})
-@Ignore // TODO T110934492
 public class TextInputTest {
 
   @Rule public PowerMockRule rule = new PowerMockRule();
@@ -65,7 +63,12 @@ public class TextInputTest {
                 return new JavaOnlyMap();
               }
             });
-    PowerMockito.when(ReactChoreographer.getInstance()).thenReturn(choreographerMock);
+    PowerMockito.when(ReactChoreographer.getInstance()).thenAnswer(new Answer<Object>() {
+      @Override
+      public Object answer(InvocationOnMock invocation) throws Throwable {
+        return choreographerMock;
+      }
+    });
 
     mPendingChoreographerCallbacks = new ArrayList<>();
     doAnswer(
