@@ -24,6 +24,8 @@ import com.facebook.react.modules.core.ReactChoreographer;
 import com.facebook.react.uimanager.UIManagerModule;
 import com.facebook.react.uimanager.ViewManager;
 import com.facebook.react.uimanager.ViewProps;
+import com.facebook.soloader.SoLoader;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -52,6 +54,8 @@ public class TextInputTest {
 
   @Before
   public void setUp() {
+    SoLoader.setInTestMode();
+
     PowerMockito.mockStatic(Arguments.class, ReactChoreographer.class);
 
     ReactChoreographer choreographerMock = mock(ReactChoreographer.class);
